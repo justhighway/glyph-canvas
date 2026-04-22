@@ -10,13 +10,13 @@ export const DEFAULT_ANALYSIS_MODE = 'portrait' as const;
 export const MAX_IMAGE_FILE_SIZE_BYTES = 10 * 1024 * 1024;
 
 /**
- * 업로드 허용 이미지 MIME 타입 목록
+ * 업로드 허용 이미지 MIME 타입 세트
  */
-export const ALLOWED_IMAGE_MIME_TYPES = [
+export const ALLOWED_IMAGE_MIME_TYPE_SET = new Set([
   'image/jpeg',
   'image/png',
   'image/webp',
-] as const;
+]);
 
 /**
  * * Canvas에 글자를 채울 때 줄 간격 비율

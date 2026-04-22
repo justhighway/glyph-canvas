@@ -1,8 +1,11 @@
 import './globals.css';
 
-import { Noto_Sans, Noto_Sans_JP, Noto_Sans_KR } from 'next/font/google';
+import { Noto_Sans, Noto_Sans_JP, Noto_Sans_KR, Geist } from 'next/font/google';
 
 import type { Metadata } from 'next';
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const notoSans = Noto_Sans({
   weight: ['400', '700'],
@@ -39,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang='ko'
-      className={`${notoSansKr.variable} ${notoSans.variable} ${notoSansJp.variable}`}
+      className={cn(notoSansKr.variable, notoSans.variable, notoSansJp.variable, "font-sans", geist.variable)}
     >
       <body className='min-h-full flex flex-col'>{children}</body>
     </html>

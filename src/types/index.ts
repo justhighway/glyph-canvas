@@ -1,40 +1,56 @@
-// 앱 전반 도메인 타입
+import { PortraitAnalysisResult } from './portrait';
+import { SceneAnalysisResult } from './scene';
+
+/** 지원 언어 */
+export type Language = 'ko' | 'en' | 'jp';
+
+/** 분석 모드 (인물 or 풍경) */
+export type AnalysisMode = 'portrait' | 'scene';
 
 /**
- * 지원하는 언어 타입
- */
-export type Language = 'ko' | 'ja' | 'en';
-
-/**
- * 객체의 위치를 나타내는 사각형 영역 (0~1 사이의 비율값)
- */
-export type BoundingBox = {
-  x: number; // 가로 시작점 (left)
-  y: number; // 세로 시작점 (top)
-  w: number; // 가로 너비 (width)
-  h: number; // 세로 높이 (height)
-};
-
-/**
- * AI가 이미지에서 찾아낸 개별 객체 정보
- */
-export type SegmentationObject = {
-  label: string; // COCO 데이터셋 기준 클래스명 (예: 'dog', 'person')
-  score: number; // AI의 확신도 (0~1), 노이즈 걸러내기 용
-  box: BoundingBox; // 대략적인 사각형 위치
-  mask: Uint8ClampedArray; // 실제 객체의 정교한 모양 (원본 이미지 크기의 이진 데이터). mask[i] > 128이면 객체 픽셀
-};
-
-/**
- * 이미지 전체 분석 결과 보고서
- */
-export type SegmentationResult = {
-  objects: SegmentationObject[]; // 발견된 모든 객체들
-  imageWidth: number; // 분석된 이미지의 원본 가로 폭
-  imageHeight: number; // 분석된 이미지의 원본 세로 높이
-};
-
-/**
- * 분석 프로세스의 현재 단계
+ ** 이미지 분석 프로세스의 현재 단계
+ ** 이 값을 기반으로 로딩 스피너 / 결과 / 에러 화면 중 UI를 결정
  */
 export type AnalysisPhase = 'idle' | 'loading' | 'done' | 'error';
+
+/**
+ ** 0~1 사이 비율값으로 표현한 사각형 영역
+ ** 이미지 크기와 무관하게 위치를 표현할 수 있어 모델 출력을 정규화할 때 사용함
+ ** 예: `x=0.5`는 이미지 가로 폭의 정중앙
+ */
+export type BoundingBox = {
+  /** 박스 완쪽 상단 x 좌표 */
+  x: number;
+  /** 박스 왼쪽 상단 y 좌표 */
+  y: number;
+  /** 박스 너비 */
+  width: number;
+  /** 박스 높이 */
+  height: number;
+};
+
+/** 2D 좌표의 포인트 */
+export type Point = {
+  x: number;
+  y: number;
+};
+
+/** RGB 컬러 */
+export type RGB = {
+  r: number;
+  g: number;
+  b: number;
+};
+
+/**
+ ** 모드별 분석 결과 유니온
+ ** mode 필드로 타입을 좁혀 data에 안전하게 접근 가능
+ * ```
+ * if (result.mode === 'portrait') {
+ *   result.data.bodyPartDetections // Typescript가 타입을 알고 있음
+ * }
+ * ```
+ */
+export type AnalysisResult =
+  | { mode: 'portrait'; data: PortraitAnalysisResult }
+  | { mode: 'scene'; data: SceneAnalysisResult };

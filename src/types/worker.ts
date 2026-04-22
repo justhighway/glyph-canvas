@@ -1,31 +1,8 @@
-import type { SegmentationObject } from '.';
-
 /**
- * [Main -> Worker] 메인 스레드가 워커에게 내리는 명령
+ * 현재 인물 모드는 MediaPipe SDK를 훅에서 직접 호출하는 방식으로 구현한다.
+ * Web Worker를 사용하지 않으므로 이 파일의 메시지 타입은 아직 정의하지 않는다.
+ *
+ * 추후 MediaPipe 추론을 Worker로 옮길 경우 여기에 메시지 타입을 정의한다.
  */
-export type SegmentationCommand = {
-  type: 'START_ANALYSIS';
-  imageData: ImageData;
-};
 
-/**
- * [Worker -> Main] 워커가 작업 중에 발생하는 사건(이벤트) 알림
- */
-export type SegmentationEvent =
-  | {
-      type: 'MODEL_READY'; // 모델 로딩 완료, 작업 준비됨
-    }
-  | {
-      type: 'PROGRESS_UPDATED'; // 분석 진행률 업데이트
-      percent: number;
-    }
-  | {
-      type: 'ANALYSIS_COMPLETED'; // 분석 최종 완료 및 데이터 전달
-      objects: SegmentationObject[];
-      imageWidth: number;
-      imageHeight: number;
-    }
-  | {
-      type: 'ERROR_OCCURRED'; // 작업 중 오류 발생
-      message: string;
-    };
+export {};

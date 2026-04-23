@@ -16,11 +16,13 @@ type BodyPartLabelEntry = {
  */
 export const BODY_PART_LABEL_MAP: Record<BodyPartKey, BodyPartLabelEntry> = {
   eye: { ko: '눈', en: 'eye', jp: '目' },
+  iris: { ko: '눈', en: 'eye', jp: '目' },
   eyebrow: { ko: '눈썹', en: 'brow', jp: '眉' },
-  nose: { ko: '코', en: 'bose', jp: '鼻' },
+  nose: { ko: '코', en: 'nose', jp: '鼻' },
   mouth: { ko: '입', en: 'mouth', jp: '口' },
   ear: { ko: '귀', en: 'ear', jp: '耳' },
   faceOval: { ko: '얼굴', en: 'face', jp: '顔' },
-  skin: { ko: '피부', en: 'skin', jp: '肌' },
+  skin: { ko: '몸', en: 'body', jp: '体' },
   hair: { ko: '머리', en: 'hair', jp: '髪' },
+  clothing: { ko: '옷', en: 'clothes', jp: '服' },
 };
